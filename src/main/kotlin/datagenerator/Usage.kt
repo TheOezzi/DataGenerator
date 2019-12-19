@@ -66,10 +66,7 @@ fun main() {
 }
 
 private fun generateCsvHeader(csvUtils: CSVUtils, writer: FileWriter) {
-    csvUtils.writeLine(
-        writer,
-        listOf("Age", "Sex", "SalaryPerYear", "HasAJob", "JobDurationInYears", "OwnsAHouse", "HasOtherCredits", "ShouldGetCredit")
-    )
+    csvUtils.writeLine(writer, Person.csvHeader())
 }
 
 private fun writePersonsToCsv(
@@ -78,18 +75,7 @@ private fun writePersonsToCsv(
     writer: FileWriter
 ) {
     for (person: Person in persons) {
-        val list = ArrayList<String>()
-
-        list.add(person.age.toString())
-        list.add(person.sex.toString())
-        list.add(person.salary.toString())
-        list.add(person.hasAJob.toString())
-        list.add(person.jobDurationInYears.toString())
-        list.add(person.ownsAHouse.toString())
-        list.add(person.hasOtherCredits.toString())
-        list.add(person.shouldGetCredit.toString())
-
-        csvUtils.writeLine(writer, list)
+        csvUtils.writeLine(writer, person.asStringList())
     }
 
     writer.flush()
@@ -101,7 +87,7 @@ private fun prepareCSVFile(): Triple<CSVUtils, LinkedList<Person>, FileWriter> {
 
     val persons = LinkedList<Person>()
 
-    val csvFile = "/Users/cku/Desktop/persons.csv"
+    val csvFile = "~/Desktop/persons.csv"
     val writer = FileWriter(csvFile)
     return Triple(csvUtils, persons, writer)
 }
